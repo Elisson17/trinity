@@ -20,7 +20,9 @@
     <% end %>
 
     <div class="actions">
-      <%= f.submit "Login", class: "w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" %>
+      <%= render RubyUI::Button.new(type: :submit, variant: :primary, size: :lg, class: "w-full") do %>
+        Entrar
+      <% end %>
     </div>
   <% end %>
 </div>
