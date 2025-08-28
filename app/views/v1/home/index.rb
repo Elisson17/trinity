@@ -49,7 +49,6 @@ class Views::V1::Home::Index < Views::Base
 
   def render_cards
     div class: "grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" do
-      # Card Produtos
       div class: "bg-blue-50 p-6 rounded-lg border border-blue-200" do
         h3 class: "text-xl font-semibold text-blue-800 mb-3" do
           "🛍️ Produtos"
@@ -62,7 +61,6 @@ class Views::V1::Home::Index < Views::Base
         end
       end
 
-      # Card Favoritos
       div class: "bg-red-50 p-6 rounded-lg border border-red-200" do
         h3 class: "text-xl font-semibold text-red-800 mb-3" do
           "❤️ Favoritos"
@@ -74,12 +72,11 @@ class Views::V1::Home::Index < Views::Base
             "Salve seus produtos favoritos"
           end
         end
-        Button(variant: :destructive, size: :sm, class: "w-full") do
+        Button(variant: :destructive, size: :sm, class: "w-full text-white") do
           "Ver Favoritos"
         end
       end
 
-      # Card Carrinho
       div class: "bg-green-50 p-6 rounded-lg border border-green-200" do
         h3 class: "text-xl font-semibold text-green-800 mb-3" do
           "🛒 Carrinho"
