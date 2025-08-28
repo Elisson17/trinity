@@ -22,10 +22,11 @@
     <%= javascript_include_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "", type: "module" %>
   </head>
 
-  <body>
+  <body class=" h-screen">
     <%= render 'components/header' %>
-    <main class="container mx-auto mt-8 px-5">
+    <main class="container mx-auto mt-8 mb-8 px-5">
       <%= yield %>
     </main>
+    <%= render 'components/footer' %>
   </body>
 </html>
