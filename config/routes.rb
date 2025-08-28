@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   namespace :v1 do
     root "home#index"
+    resources :products, only: [ :index, :show ]
   end
 end
