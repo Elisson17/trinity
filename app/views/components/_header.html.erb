@@ -8,6 +8,13 @@
         <% end %>
       </div>
 
+      <nav class="hidden lg:flex items-center space-x-8 ml-8">
+        <%= link_to "Início", v1_root_path, class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "Produtos", v1_products_path, class: "text-gray-600 hover:text-gray-900 transition-colors font-medium" %>
+        <%= link_to "Categorias", "#", class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+        <%= link_to "Ofertas", v1_products_path(featured: true), class: "text-gray-600 hover:text-gray-900 transition-colors" %>
+      </nav>
+
       <div class="hidden md:flex flex-1 max-w-lg mx-8">
         <div class="relative w-full">
           <form class="flex w-full">
