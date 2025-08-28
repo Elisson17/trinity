@@ -15,4 +15,16 @@ class Views::Base < Components::Base
   def Button(**args, &block)
     render RubyUI::Button.new(**args, &block)
   end
+
+  def Carousel(**args, &block)
+    render RubyUI::Carousel.new(**args, &block)
+  end
+
+  def CarouselContent(**args, &block)
+    render RubyUI::CarouselContent.new(**args, &block)
+  end
+
+  def CarouselItem(**args, &block)
+    render RubyUI::CarouselItem.new(**args, &block)
+  end
 end
