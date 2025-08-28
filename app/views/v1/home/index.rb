@@ -1,15 +1,31 @@
 class Views::V1::Home::Index < Views::Base
-  def initialize(current_user:)
+  def initialize(current_user:, featured_products:, new_products:)
     @current_user = current_user
+    @featured_products = featured_products
+    @new_products = new_products
   end
 
   def view_template
-    div class: "max-w-4xl mx-auto" do
-      div class: "bg-white p-8 rounded-lg shadow-md" do
-        if @current_user
-          render_logged_in_content
-        else
-          render_guest_content
+    div class: "min-h-screen bg-gray-50" do
+      div class: "container mx-auto px-4 py-8 space-y-12" do
+        header_section
+
+        if @featured_products.any?
+          section_with_carousel(
+            title: "Produtos em Destaque",
+            subtitle: "Descubra nossa seleção especial",
+            products: @featured_products,
+            carousel_id: "featured-carousel"
+          )
+        end
+
+        if @new_products.any?
+          section_with_carousel(
+            title: "Produtos Novos",
+            subtitle: "Últimos lançamentos da nossa coleção",
+            products: @new_products,
+            carousel_id: "new-carousel"
+          )
         end
       end
     end
@@ -17,79 +33,78 @@ class Views::V1::Home::Index < Views::Base
 
   private
 
-  def render_logged_in_content
-    h1 class: "text-3xl font-bold mb-6 text-center text-gray-800" do
-      "Bem-vindo à Trinity Store, #{@current_user.name}! 🎉"
-    end
-
-    p class: "text-center text-gray-600 mb-8" do
-      "Você está logado como #{@current_user.email}"
-    end
-
-    render_cards
-
-    div class: "mt-8 text-center" do
-      p class: "text-gray-600" do
-        "Explore nossos produtos e aproveite suas compras!"
+  def header_section
+    div class: "text-center mb-12" do
+      h1 class: "text-4xl font-bold text-gray-800 mb-4" do
+        "Bem-vinda à Trinity"
+      end
+      p class: "text-lg text-gray-600 max-w-2xl mx-auto" do
+        "Descubra nossa coleção exclusiva de roupas femininas. Peças únicas para mulheres que valorizam estilo e qualidade."
       end
     end
   end
 
-  def render_guest_content
-    h1 class: "text-3xl font-bold mb-6 text-center text-gray-800" do
-      "Bem-vindo à Trinity Store! 🎉"
-    end
+  def section_with_carousel(title:, subtitle: nil, products:, carousel_id:)
+    div class: "bg-white p-8 rounded-lg shadow-md" do
+      div class: "mb-6" do
+        h2 class: "text-3xl font-bold text-gray-800 mb-2" do
+          title
+        end
+        if subtitle
+          p class: "text-gray-600" do
+            subtitle
+          end
+        end
+      end
 
-    p class: "text-center text-gray-600 mb-8" do
-      "Faça login ou registre-se para ter acesso completo a todas as funcionalidades."
-    end
+      Carousel(data_carousel_id: carousel_id, class: "w-full max-w-full") do
+        CarouselContent(class: "-ml-4") do
+          products.each do |product|
+            CarouselItem(class: "pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4") do
+              product_card(product)
+            end
+          end
+        end
 
-    render_cards
+        CarouselPrevious(class: "left-4")
+        CarouselNext(class: "right-4")
+      end
+    end
   end
 
-  def render_cards
-    div class: "grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" do
-      div class: "bg-blue-50 p-6 rounded-lg border border-blue-200" do
-        h3 class: "text-xl font-semibold text-blue-800 mb-3" do
-          "🛍️ Produtos"
-        end
-        p class: "text-blue-600 mb-4" do
-          "Explore nossa coleção de produtos incríveis"
-        end
-        Button(variant: :default, size: :sm, class: "w-full") do
-          "Ver Produtos"
-        end
-      end
-
-      div class: "bg-red-50 p-6 rounded-lg border border-red-200" do
-        h3 class: "text-xl font-semibold text-red-800 mb-3" do
-          "❤️ Favoritos"
-        end
-        p class: "text-red-600 mb-4" do
-          if @current_user
-            "Seus produtos favoritos salvos"
-          else
-            "Salve seus produtos favoritos"
+  def product_card(product)
+    Card(class: "h-full hover:shadow-lg transition-shadow duration-300") do
+      a href: v1_product_path(product), class: "block h-full" do
+        if product.has_images?
+          div class: "aspect-square overflow-hidden rounded-t-lg" do
+            img(
+              src: url_for(product.thumbnail_image("400x400")),
+              alt: product.name,
+              class: "w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            )
+          end
+        else
+          div class: "aspect-square bg-gray-200 rounded-t-lg flex items-center justify-center" do
+            span class: "text-gray-500 text-sm" do
+              "Sem imagem"
+            end
           end
         end
-        Button(variant: :destructive, size: :sm, class: "w-full text-white") do
-          "Ver Favoritos"
-        end
-      end
 
-      div class: "bg-green-50 p-6 rounded-lg border border-green-200" do
-        h3 class: "text-xl font-semibold text-green-800 mb-3" do
-          "🛒 Carrinho"
-        end
-        p class: "text-green-600 mb-4" do
-          if @current_user
-            "Finalize suas compras"
-          else
-            "Adicione produtos ao carrinho"
+        CardContent(class: "p-4 flex-1") do
+          CardTitle(class: "text-lg font-semibold text-gray-800 mb-2 h-12 overflow-hidden") do
+            product.name
           end
-        end
-        Button(variant: :default, size: :sm, class: "w-full bg-green-600 hover:bg-green-700 rounded-lg") do
-          "Ver Carrinho"
+
+          CardDescription(class: "text-gray-600 mb-3 h-16 overflow-hidden text-sm") do
+            product.description.truncate(100)
+          end
+
+          div class: "mt-auto" do
+            p class: "text-xl font-bold text-green-600" do
+              product.formatted_price
+            end
+          end
         end
       end
     end
