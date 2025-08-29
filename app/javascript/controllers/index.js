@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import RubyUi__CarouselController from "./ruby_ui/carousel_controller"
 application.register("ruby-ui--carousel", RubyUi__CarouselController)
+
+import RubyUi__FormFieldController from "./ruby_ui/form_field_controller"
+application.register("ruby-ui--form-field", RubyUi__FormFieldController)

@@ -62,4 +62,26 @@ class Views::Base < Components::Base
   def CardTitle(**args, &block)
     render RubyUI::CardTitle.new(**args, &block)
   end
+
+  # Componentes do Form
+
+  def Form(**args, &block)
+    render RubyUI::Form.new(**args, &block)
+  end
+
+  def FormField(**args, &block)
+    render RubyUI::FormField.new(**args, &block)
+  end
+
+  def FormFieldError(**args, &block)
+    render RubyUI::FormFieldError.new(**args, &block)
+  end
+
+  def FormFieldHint(**args, &block)
+    render RubyUI::FormFieldHint.new(**args, &block)
+  end
+
+  def FormFieldLabel(**args, &block)
+    render RubyUI::FormFieldLabel.new(**args, &block)
+  end
 end
