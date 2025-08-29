@@ -76,32 +76,8 @@ class Views::Admin::Shared::Tables::BaseTable < Views::Base
         div class: "flex-1"
 
         if @pagination.total_pages > 1
-          div class: "flex items-center justify-center space-x-2" do
-            if @pagination.prev_page
-              link_to "?page=#{@pagination.prev_page}",
-                      class: "px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700" do
-                "Anterior"
-              end
-            else
-              span class: "px-3 py-2 text-sm leading-tight text-gray-300 bg-gray-100 border border-gray-300 rounded-l-lg cursor-not-allowed" do
-                "Anterior"
-              end
-            end
-
-            span class: "px-3 py-2 text-sm leading-tight text-blue-600 bg-blue-50 border border-gray-300" do
-              "#{@pagination.current_page} de #{@pagination.total_pages}"
-            end
-
-            if @pagination.next_page
-              link_to "?page=#{@pagination.next_page}",
-                      class: "px-3 py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700" do
-                "Próximo"
-              end
-            else
-              span class: "px-3 py-2 text-sm leading-tight text-gray-300 bg-gray-100 border border-gray-300 rounded-r-lg cursor-not-allowed" do
-                "Próximo"
-              end
-            end
+          div class: "flex items-center justify-center space-x-1" do
+            render_pagination_buttons
           end
         else
           div class: "flex-1"
@@ -114,6 +90,110 @@ class Views::Admin::Shared::Tables::BaseTable < Views::Base
         end
       end
     end
+  end
+
+  def render_pagination_buttons
+    current_page = @pagination.current_page
+    total_pages = @pagination.total_pages
+
+    if current_page > 1
+      link_to "?page=1", class: pagination_button_class do
+        "Primeiro"
+      end
+    else
+      span class: pagination_disabled_class do
+        "Primeiro"
+      end
+    end
+
+    if @pagination.prev_page
+      link_to "?page=#{@pagination.prev_page}", class: pagination_button_class do
+        "Anterior"
+      end
+    else
+      span class: pagination_disabled_class do
+        "Anterior"
+      end
+    end
+
+    render_page_numbers
+
+    if @pagination.next_page
+      link_to "?page=#{@pagination.next_page}", class: pagination_button_class do
+        "Próximo"
+      end
+    else
+      span class: pagination_disabled_class do
+        "Próximo"
+      end
+    end
+
+    if current_page < total_pages
+      link_to "?page=#{total_pages}", class: pagination_button_class do
+        "Último"
+      end
+    else
+      span class: pagination_disabled_class do
+        "Último"
+      end
+    end
+  end
+
+  def render_page_numbers
+    current_page = @pagination.current_page
+    total_pages = @pagination.total_pages
+
+    if total_pages <= 7
+      (1..total_pages).each do |page|
+        render_page_link(page)
+      end
+    else
+      if current_page <= 4
+        (1..5).each { |page| render_page_link(page) }
+        render_ellipsis
+        render_page_link(total_pages)
+      elsif current_page >= total_pages - 3
+        render_page_link(1)
+        render_ellipsis
+        ((total_pages - 4)..total_pages).each { |page| render_page_link(page) }
+      else
+        render_page_link(1)
+        render_ellipsis
+        ((current_page - 1)..(current_page + 1)).each { |page| render_page_link(page) }
+        render_ellipsis
+        render_page_link(total_pages)
+      end
+    end
+  end
+
+  def render_page_link(page)
+    if page == @pagination.current_page
+      span class: pagination_current_class do
+        page.to_s
+      end
+    else
+      link_to "?page=#{page}", class: pagination_button_class do
+        page.to_s
+      end
+    end
+  end
+
+  def render_ellipsis
+    span class: "px-3 rounded-md py-2 text-sm leading-tight text-gray-500" do
+      "..."
+    end
+  end
+
+  def pagination_button_class
+    "px-3 rounded-md py-2 text-sm leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 transition-colors duration-200"
+  end
+
+  def pagination_current_class
+    "px-3 rounded-md py-2 text-sm leading-tight text-white bg-blue-600 border border-blue-600"
+  end
+
+  def pagination_disabled_class
+    "px-3 rounded-md py-2 text-sm leading-tight text-gray-300 bg-gray-100 border border-gray-300 cursor-not-allowed"
   end
 
   def render_empty_state
