@@ -13,6 +13,9 @@ application.register("ruby-ui--carousel", RubyUi__CarouselController)
 import RubyUi__CheckboxGroupController from "./ruby_ui/checkbox_group_controller"
 application.register("ruby-ui--checkbox-group", RubyUi__CheckboxGroupController)
 
+import RubyUi__DialogController from "./ruby_ui/dialog_controller"
+application.register("ruby-ui--dialog", RubyUi__DialogController)
+
 import RubyUi__FormFieldController from "./ruby_ui/form_field_controller"
 application.register("ruby-ui--form-field", RubyUi__FormFieldController)
 

@@ -136,4 +136,38 @@ class Views::Base < Components::Base
   def BreadcrumbSeparator(**args, &block)
     render RubyUI::BreadcrumbSeparator.new(**args, &block)
   end
+
+  # Componente de Dialog/Modal
+
+  def Dialog(**args, &block)
+    render RubyUI::Dialog.new(**args, &block)
+  end
+
+  def DialogContent(**args, &block)
+    render RubyUI::DialogContent.new(**args, &block)
+  end
+
+  def DialogDescription(**args, &block)
+    render RubyUI::DialogDescription.new(**args, &block)
+  end
+
+  def DialogFooter(**args, &block)
+    render RubyUI::DialogFooter.new(**args, &block)
+  end
+
+  def DialogHeader(**args, &block)
+    render RubyUI::DialogHeader.new(**args, &block)
+  end
+
+  def DialogMiddle(**args, &block)
+    render RubyUI::DialogMiddle.new(**args, &block)
+  end
+
+  def DialogTitle(**args, &block)
+    render RubyUI::DialogTitle.new(**args, &block)
+  end
+
+  def DialogTrigger(**args, &block)
+    render RubyUI::DialogTrigger.new(**args, &block)
+  end
 end
