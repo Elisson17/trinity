@@ -102,7 +102,38 @@ class Views::Base < Components::Base
   end
 
   # Componente de MaskedInput
+
   def MaskedInput(**args, &block)
     render RubyUI::MaskedInput.new(**args, &block)
+  end
+
+  # Componente de BreadCrumb
+
+  def BreadCrumb(**args, &block)
+    render RubyUI::BreadCrumb.new(**args, &block)
+  end
+
+  def BreadcrumbEllipsis(**args, &block)
+    render RubyUI::BreadcrumbEllipsis.new(**args, &block)
+  end
+
+  def BreadcrumbItem(**args, &block)
+    render RubyUI::BreadcrumbItem.new(**args, &block)
+  end
+
+  def BreadcrumbLink(**args, &block)
+    render RubyUI::BreadcrumbLink.new(**args, &block)
+  end
+
+  def BreadcrumbList(**args, &block)
+    render RubyUI::BreadcrumbList.new(**args, &block)
+  end
+
+  def BreadcrumbPage(**args, &block)
+    render RubyUI::BreadcrumbPage.new(**args, &block)
+  end
+
+  def BreadcrumbSeparator(**args, &block)
+    render RubyUI::BreadcrumbSeparator.new(**args, &block)
   end
 end
