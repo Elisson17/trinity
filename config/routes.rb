@@ -16,4 +16,11 @@ Rails.application.routes.draw do
     root "home#index"
     resources :products, only: [ :index, :show ]
   end
+
+  # Admin routes
+  namespace :admin do
+    root "dashboard#index"
+    resources :products
+    get "dashboard", to: "dashboard#index"
+  end
 end
