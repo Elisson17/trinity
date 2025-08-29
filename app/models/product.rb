@@ -14,6 +14,7 @@ class Product < ApplicationRecord
 
   before_validation :generate_sku, if: -> { sku.blank? }
   before_validation :format_name
+  before_validation :normalize_price
 
   def formatted_price
     "R$ #{price.to_f.round(2).to_s.gsub('.', ',')}"
@@ -64,5 +65,18 @@ class Product < ApplicationRecord
 
   def format_name
     self.name = name.strip.titleize if name.present?
+  end
+
+  def normalize_price
+    if price.is_a?(String) && price.present?
+      # Remove "R$ " e converte vírgula para ponto
+      normalized_price = price.to_s
+                             .gsub(/^R\$\s*/, "") # Remove R$ do início
+                             .gsub(/\s/, "")      # Remove espaços
+                             .gsub(/\.(?=\d{3})/, "") # Remove pontos de milhares
+                             .gsub(",", ".")      # Converte vírgula decimal para ponto
+
+      self.price = normalized_price.to_f if normalized_price.present?
+    end
   end
 end
