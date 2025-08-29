@@ -15,3 +15,6 @@ application.register("ruby-ui--checkbox-group", RubyUi__CheckboxGroupController)
 
 import RubyUi__FormFieldController from "./ruby_ui/form_field_controller"
 application.register("ruby-ui--form-field", RubyUi__FormFieldController)
+
+import RubyUi__MaskedInputController from "./ruby_ui/masked_input_controller"
+application.register("ruby-ui--masked-input", RubyUi__MaskedInputController)

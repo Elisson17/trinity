@@ -100,4 +100,9 @@ class Views::Base < Components::Base
   def CheckboxGroup(**args, &block)
     render RubyUI::CheckboxGroup.new(**args, &block)
   end
+
+  # Componente de MaskedInput
+  def MaskedInput(**args, &block)
+    render RubyUI::MaskedInput.new(**args, &block)
+  end
 end
