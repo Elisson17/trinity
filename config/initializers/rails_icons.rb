@@ -1,5 +1,5 @@
 RailsIcons.configure do |config|
-  config.default_library = "heroicons"
+  config.default_library = "lucide"
   # config.default_variant = "" # Set a default variant for all libraries
 
   # Override Heroicon defaults
