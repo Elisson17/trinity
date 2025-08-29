@@ -90,4 +90,14 @@ class Views::Base < Components::Base
   def Input(**args, &block)
     render RubyUI::Input.new(**args, &block)
   end
+
+  # Componentes de CheckBox
+
+  def Checkbox(**args, &block)
+    render RubyUI::Checkbox.new(**args, &block)
+  end
+
+  def CheckboxGroup(**args, &block)
+    render RubyUI::CheckboxGroup.new(**args, &block)
+  end
 end
