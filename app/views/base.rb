@@ -170,4 +170,38 @@ class Views::Base < Components::Base
   def DialogTrigger(**args, &block)
     render RubyUI::DialogTrigger.new(**args, &block)
   end
+
+  # Componentes de tabela Table
+
+  def Table(**args, &block)
+    render RubyUI::Table.new(**args, &block)
+  end
+
+  def TableBody(**args, &block)
+    render RubyUI::TableBody.new(**args, &block)
+  end
+
+  def TableCaption(**args, &block)
+    render RubyUI::TableCaption.new(**args, &block)
+  end
+
+  def TableCell(**args, &block)
+    render RubyUI::TableCell.new(**args, &block)
+  end
+
+  def TableFooter(**args, &block)
+    render RubyUI::TableFooter.new(**args, &block)
+  end
+
+  def TableHead(**args, &block)
+    render RubyUI::TableHead.new(**args, &block)
+  end
+
+  def TableHeader(**args, &block)
+    render RubyUI::TableHeader.new(**args, &block)
+  end
+
+  def TableRow(**args, &block)
+    render RubyUI::TableRow.new(**args, &block)
+  end
 end
