@@ -7,6 +7,9 @@ import { application } from "./application"
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import RubyUi__AlertDialogController from "./ruby_ui/alert_dialog_controller"
+application.register("ruby-ui--alert-dialog", RubyUi__AlertDialogController)
+
 import RubyUi__CarouselController from "./ruby_ui/carousel_controller"
 application.register("ruby-ui--carousel", RubyUi__CarouselController)
 

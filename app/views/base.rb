@@ -236,4 +236,42 @@ class Views::Base < Components::Base
   def AlertTitle(**args, &block)
     render RubyUI::AlertTitle.new(**args, &block)
   end
+
+  # Componente de Dialogo de alerta (Alert Dialog)
+
+  def AlertDialog(**args, &block)
+    render RubyUI::AlertDialog.new(**args, &block)
+  end
+
+  def AlertDialogAction(**args, &block)
+    render RubyUI::AlertDialogAction.new(**args, &block)
+  end
+
+  def AlertDialogCancel(**args, &block)
+    render RubyUI::AlertDialogCancel.new(**args, &block)
+  end
+
+  def AlertDialogContent(**args, &block)
+    render RubyUI::AlertDialogContent.new(**args, &block)
+  end
+
+  def AlertDialogDescription(**args, &block)
+    render RubyUI::AlertDialogDescription.new(**args, &block)
+  end
+
+  def AlertDialogFooter(**args, &block)
+    render RubyUI::AlertDialogFooter.new(**args, &block)
+  end
+
+  def AlertDialogHeader(**args, &block)
+    render RubyUI::AlertDialogHeader.new(**args, &block)
+  end
+
+  def AlertDialogTitle(**args, &block)
+    render RubyUI::AlertDialogTitle.new(**args, &block)
+  end
+
+  def AlertDialogTrigger(**args, &block)
+    render RubyUI::AlertDialogTrigger.new(**args, &block)
+  end
 end
