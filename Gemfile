@@ -78,3 +78,5 @@ gem "tailwind_merge", "~> 1.3"
 gem "kaminari", "~> 1.2"
 
 gem "rails_icons", "~> 1.4"
+
+gem "byebug", "~> 12.0", groups: [:development, :test]
