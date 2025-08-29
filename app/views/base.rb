@@ -110,7 +110,7 @@ class Views::Base < Components::Base
   # Componente de BreadCrumb
 
   def BreadCrumb(**args, &block)
-    render RubyUI::BreadCrumb.new(**args, &block)
+    render RubyUI::Breadcrumb.new(**args, &block)
   end
 
   def BreadcrumbEllipsis(**args, &block)
