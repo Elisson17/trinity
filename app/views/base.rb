@@ -222,4 +222,18 @@ class Views::Base < Components::Base
   def PaginationItem(**args, &block)
     render RubyUI::PaginationItem.new(**args, &block)
   end
+
+  # Componente de alert
+
+  def Alert(**args, &block)
+    render RubyUI::Alert.new(**args, &block)
+  end
+
+  def AlertDescription(**args, &block)
+    render RubyUI::AlertDescription.new(**args, &block)
+  end
+
+  def AlertTitle(**args, &block)
+    render RubyUI::AlertTitle.new(**args, &block)
+  end
 end
