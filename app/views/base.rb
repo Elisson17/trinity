@@ -84,4 +84,10 @@ class Views::Base < Components::Base
   def FormFieldLabel(**args, &block)
     render RubyUI::FormFieldLabel.new(**args, &block)
   end
+
+  # Componente de Input
+
+  def Input(**args, &block)
+    render RubyUI::Input.new(**args, &block)
+  end
 end
