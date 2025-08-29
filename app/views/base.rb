@@ -204,4 +204,22 @@ class Views::Base < Components::Base
   def TableRow(**args, &block)
     render RubyUI::TableRow.new(**args, &block)
   end
+
+  # Componente de paginação
+
+  def Pagination(**args, &block)
+    render RubyUI::Pagination.new(**args, &block)
+  end
+
+  def PaginationContent(**args, &block)
+    render RubyUI::PaginationContent.new(**args, &block)
+  end
+
+  def PaginationEllipsis(**args, &block)
+    render RubyUI::PaginationEllipsis.new(**args, &block)
+  end
+
+  def PaginationItem(**args, &block)
+    render RubyUI::PaginationItem.new(**args, &block)
+  end
 end
