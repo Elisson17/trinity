@@ -12,9 +12,9 @@ class Product < ApplicationRecord
   scope :by_price_range, ->(min, max) { where(price: min..max) }
   scope :search_by_name, ->(term) { where("name ILIKE ?", "%#{term}%") }
 
+  before_validation :normalize_price
   before_validation :generate_sku, if: -> { sku.blank? }
   before_validation :format_name
-  before_validation :normalize_price
 
   def formatted_price
     "R$ #{price.to_f.round(2).to_s.gsub('.', ',')}"
@@ -68,15 +68,20 @@ class Product < ApplicationRecord
   end
 
   def normalize_price
+    # Normaliza o preço se for uma string (caso não tenha sido normalizado no controller)
     if price.is_a?(String) && price.present?
       # Remove "R$ " e converte vírgula para ponto
       normalized_price = price.to_s
+                             .strip
                              .gsub(/^R\$\s*/, "") # Remove R$ do início
                              .gsub(/\s/, "")      # Remove espaços
-                             .gsub(/\.(?=\d{3})/, "") # Remove pontos de milhares
+                             .gsub(/\.(?=\d{3,})/, "") # Remove pontos de milhares (ex: 1.000)
                              .gsub(",", ".")      # Converte vírgula decimal para ponto
 
-      self.price = normalized_price.to_f if normalized_price.present?
+      # Só atribui se conseguir converter para um número válido
+      if normalized_price.match?(/^\d+\.?\d*$/) && normalized_price.to_f > 0
+        self.price = normalized_price.to_f
+      end
     end
   end
 end

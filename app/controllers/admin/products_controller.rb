@@ -14,7 +14,19 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def create
-    @product = Product.new(product_params)
+    params_hash = product_params
+    if params_hash[:price].present? && params_hash[:price].is_a?(String)
+      normalized_price = params_hash[:price].to_s
+                                           .strip
+                                           .gsub(/^R\$\s*/, "")
+                                           .gsub(/\s/, "")
+                                           .gsub(/\.(?=\d{3,})/, "")
+                                           .gsub(",", ".")
+
+      params_hash[:price] = normalized_price.to_f if normalized_price.match?(/^\d+\.?\d*$/)
+    end
+
+    @product = Product.new(params_hash)
 
     if @product.save
       redirect_to admin_products_path, notice: "Produto criado com sucesso!"
@@ -28,7 +40,20 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def update
-    if @product.update(product_params)
+    params_hash = product_params
+    p params_hash
+    if params_hash[:price].present? && params_hash[:price].is_a?(String)
+      normalized_price = params_hash[:price].to_s
+                                           .strip
+                                           .gsub(/^R\$\s*/, "")
+                                           .gsub(/\s/, "")
+                                           .gsub(/\.(?=\d{3,})/, "")
+                                           .gsub(",", ".")
+
+      params_hash[:price] = normalized_price.to_f if normalized_price.match?(/^\d+\.?\d*$/)
+    end
+
+    if @product.update(params_hash)
       redirect_to admin_product_path(@product), notice: "Produto atualizado com sucesso!"
     else
       render Views::Admin::Products::Edit.new(product: @product), status: :unprocessable_entity

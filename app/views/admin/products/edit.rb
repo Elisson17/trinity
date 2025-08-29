@@ -144,13 +144,10 @@ class Views::Admin::Products::Edit < Views::Base
           MaskedInput(
             name: "product[price]",
             id: "product_price",
-            value: @product.price ? "R$ #{@product.price.to_s.gsub('.', ',')}" : "",
+            value: @product.price ? @product.formatted_price : "",
             placeholder: "R$ 0,00",
-            data: { maska: "R$ #,##" }
+            data: { maska: "R$ ###,##", tokens: "###,##" }
           )
-        end
-        FormFieldHint do
-          "Digite o valor no formato: R$ 99,99"
         end
         FormFieldError do
           @product.errors[:price].first if @product.errors[:price].any?
@@ -193,33 +190,33 @@ class Views::Admin::Products::Edit < Views::Base
   def product_status_section(form)
     div class: "grid grid-cols-1 gap-6 sm:grid-cols-2" do
       FormField do
+        input type: "hidden", name: "product[active]", value: "0"
         div class: "flex items-center space-x-3" do
           Checkbox(
             name: "product[active]",
             id: "product_active",
-            checked: @product.active,
+            checked: @product.active?,
             value: "1"
           )
           FormFieldLabel(for: "product_active", class: "text-sm font-medium text-gray-900") do
             "Produto Ativo"
           end
         end
-        input type: "hidden", name: "product[active]", value: "0"
       end
 
       FormField do
+        input type: "hidden", name: "product[featured]", value: "0"
         div class: "flex items-center space-x-3" do
           Checkbox(
             name: "product[featured]",
             id: "product_featured",
-            checked: @product.featured,
+            checked: @product.featured?,
             value: "1"
           )
           FormFieldLabel(for: "product_featured", class: "text-sm font-medium text-gray-900") do
             "Produto em Destaque"
           end
         end
-        input type: "hidden", name: "product[featured]", value: "0"
       end
     end
   end
