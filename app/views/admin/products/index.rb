@@ -1,11 +1,13 @@
 class Views::Admin::Products::Index < Views::Base
-  def initialize(products:)
+  def initialize(products:, current_params: {})
     @products = products
+    @current_params = current_params
   end
 
   def view_template
     div class: "space-y-6" do
       page_header
+      products_filter
       products_table
     end
   end
@@ -25,6 +27,14 @@ class Views::Admin::Products::Index < Views::Base
         end
       end
     end
+  end
+
+  def products_filter
+    render Views::Admin::Shared::Filters::ProductsFilter.new(
+      current_params: @current_params,
+      form_url: admin_products_path,
+      reset_url: admin_products_path
+    )
   end
 
   def products_table
