@@ -9,8 +9,21 @@ class Views::Base < Components::Base
 
   include Phlex::Rails::Helpers::Routes
   include Phlex::Rails::Helpers::FormWith
+  include Phlex::Rails::Helpers::LinkTo
+  include Phlex::Rails::Helpers::L
   include ActionView::Helpers::CsrfHelper
+  include ActionView::Helpers::DateHelper
   include ERB::Util
+  include PhlexIcons::Lucide
+
+  def icon(name, **attrs)
+    icon_class = "#{name.to_s.gsub('-', '_').camelize}"
+    if PhlexIcons::Lucide.const_defined?(icon_class)
+      render PhlexIcons::Lucide.const_get(icon_class).new(**attrs)
+    else
+      render PhlexIcons::Lucide::CircleX.new(**attrs)
+    end
+  end
 
   # Componente de botão
   def Button(**args, &block)
@@ -273,5 +286,11 @@ class Views::Base < Components::Base
 
   def AlertDialogTrigger(**args, &block)
     render RubyUI::AlertDialogTrigger.new(**args, &block)
+  end
+
+  # Componente de Link
+
+  def Link(**args, &block)
+    render RubyUI::Link.new(**args, &block)
   end
 end

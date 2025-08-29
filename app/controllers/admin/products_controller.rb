@@ -2,7 +2,8 @@ class Admin::ProductsController < Admin::BaseController
   before_action :set_product, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @products = Product.all.order(created_at: :desc)
+    @products = Product.all.order(created_at: :desc).page(params[:page]).per(10)
+    render Views::Admin::Products::Index.new(products: @products)
   end
 
   def show
