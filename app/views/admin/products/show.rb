@@ -48,7 +48,7 @@ class Views::Admin::Products::Show < Views::Base
         form_with url: admin_product_path(@product), method: :delete,
                   confirm: "Tem certeza que deseja remover este produto?",
                   local: true, class: "inline" do
-          Button(variant: :destructive, type: "submit") do
+          Button(variant: :destructive, type: "submit", class: "text-white") do
             "Excluir"
           end
         end
@@ -110,7 +110,7 @@ class Views::Admin::Products::Show < Views::Base
               img(
                 src: url_for(image.variant(resize_to_limit: [ 300, 300 ])),
                 alt: "Imagem #{index + 1}",
-                class: "w-full h-48 object-cover rounded-lg border border-gray-200"
+                class: "w-full object-cover rounded-lg border border-gray-200"
               )
               div class: "absolute top-2 right-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-xs" do
                 "#{index + 1}"
