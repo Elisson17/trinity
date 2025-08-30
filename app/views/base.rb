@@ -294,4 +294,10 @@ class Views::Base < Components::Base
   def Link(**args, &block)
     render RubyUI::Link.new(**args, &block)
   end
+
+  # Componente de Area de Texto TextArea
+
+  def Textarea(**args, &block)
+    render RubyUI::Textarea.new(**args, &block)
+  end
 end
