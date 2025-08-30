@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   # Admin routes
   namespace :admin do
     root "dashboard#index"
-    resources :products
+    resources :products do
+      member do
+        delete :remove_image
+      end
+    end
     get "dashboard", to: "dashboard#index"
   end
 end

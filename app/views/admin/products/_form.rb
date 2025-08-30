@@ -219,19 +219,24 @@ class Views::Admin::Products::Form < Views::Base
   def current_images_section
     FormField do
       FormFieldLabel { "Imagens Atuais" }
-      div class: "grid grid-cols-2 md:grid-cols-4 gap-4 mt-2" do
+      div class: "grid grid-cols-2 md:grid-cols-4 gap-4 mt-2", data_controller: "image-product" do
         @product.images.each_with_index do |image, index|
           div class: "relative group" do
             img(
               src: url_for(image.variant(resize_to_limit: [ 200, 200 ])),
               alt: "Imagem #{index + 1}",
-              class: "w-full h-32 object-cover rounded-lg border border-gray-200"
+              class: "w-full object-cover rounded-lg border border-gray-200"
             )
-            div class: "absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center" do
+            div class: "absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 rounded-lg transition-all duration-200 flex items-center justify-center" do
               button(
                 type: "button",
                 class: "opacity-0 group-hover:opacity-100 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-all duration-200",
-                title: "Remover imagem"
+                title: "Remover imagem",
+                data: {
+                  action: "click->image-product#removeImage",
+                  image_id: image.id,
+                  product_id: @product.id
+                },
               ) do
                 "✕"
               end

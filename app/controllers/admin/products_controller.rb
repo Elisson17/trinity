@@ -1,5 +1,5 @@
 class Admin::ProductsController < Admin::BaseController
-  before_action :set_product, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_product, only: [ :show, :edit, :update, :destroy, :remove_image ]
 
   def index
     @products = Product.all
@@ -73,6 +73,32 @@ class Admin::ProductsController < Admin::BaseController
   def destroy
     @product.destroy
     redirect_to admin_products_path, notice: "Produto removido com sucesso!"
+  end
+
+  def remove_image
+    image_id = params[:image_id]
+
+    if image_id.present?
+      image = @product.images.find_by(id: image_id)
+      if image
+        image.purge
+        render json: {
+          success: true,
+          message: "Imagem removida com sucesso!",
+          image_id: image_id
+        }
+      else
+        render json: {
+          success: false,
+          message: "Imagem não encontrada!"
+        }, status: :not_found
+      end
+    else
+      render json: {
+        success: false,
+        message: "ID da imagem não fornecido!"
+      }, status: :bad_request
+    end
   end
 
   private
