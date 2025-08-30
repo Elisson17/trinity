@@ -15,6 +15,18 @@ Rails.application.routes.draw do
   namespace :v1 do
     root "home#index"
     resources :products, only: [ :index, :show ]
+
+    # User settings routes
+    namespace :user do
+      root "settings#profile", as: :settings_root
+      get "profile", to: "settings#profile"
+      get "orders", to: "settings#orders"
+      get "favorites", to: "settings#favorites"
+      get "addresses", to: "settings#addresses"
+      patch "profile", to: "settings#update_profile"
+      post "addresses", to: "settings#create_address"
+      delete "addresses/:id", to: "settings#destroy_address", as: :destroy_address
+    end
   end
 
   # Admin routes

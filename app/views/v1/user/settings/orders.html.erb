@@ -1,0 +1,68 @@
+<div class="p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">Meus Pedidos</h1>
+  </div>
+
+  <% if @orders.empty? %>
+    <div class="text-center py-12">
+      <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+      </svg>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Nenhum pedido encontrado</h3>
+      <p class="text-gray-500 mb-6">Você ainda não realizou nenhum pedido em nossa loja.</p>
+      <%= link_to v1_products_path, 
+          class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors" do %>
+        Explorar produtos
+      <% end %>
+    </div>
+  <% else %>
+    <!-- TODO: Implementar listagem de pedidos quando tiver o modelo Order -->
+    <div class="space-y-4">
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-medium text-gray-900">Pedido #12345</h3>
+            <p class="text-sm text-gray-500">Realizado em 25 de agosto de 2025</p>
+          </div>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+            Entregue
+          </span>
+        </div>
+        <div class="border-t border-gray-200 pt-3">
+          <p class="text-sm text-gray-600">2 itens • Total: R$ 129,90</p>
+          <div class="mt-2 flex space-x-3">
+            <button class="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              Ver detalhes
+            </button>
+            <button class="text-sm text-gray-600 hover:text-gray-500 font-medium">
+              Comprar novamente
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-medium text-gray-900">Pedido #12344</h3>
+            <p class="text-sm text-gray-500">Realizado em 20 de agosto de 2025</p>
+          </div>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            Em trânsito
+          </span>
+        </div>
+        <div class="border-t border-gray-200 pt-3">
+          <p class="text-sm text-gray-600">1 item • Total: R$ 79,90</p>
+          <div class="mt-2 flex space-x-3">
+            <button class="text-sm text-blue-600 hover:text-blue-500 font-medium">
+              Rastrear pedido
+            </button>
+            <button class="text-sm text-gray-600 hover:text-gray-500 font-medium">
+              Ver detalhes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

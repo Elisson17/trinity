@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Configurações - Trinity Store</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": Rails.env.production? ? "reload" : "" %>
+    <%= javascript_include_tag "application", "data-turbo-track": Rails.env.production? ? "reload" : "", type: "module" %>
+    <script src="/app/javascript/user_settings.js"></script>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen">
+    <%= render "components/header" %>
+    
+    <div class="container mx-auto px-4 py-6">
+      <!-- Mobile Navigation -->
+      <div class="lg:hidden mb-6">
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+          <div class="flex justify-between items-center space-x-4">
+            <%= link_to v1_user_profile_path, 
+                class: "flex flex-col items-center p-2 rounded-lg transition-colors #{'bg-blue-50 text-blue-600' if @current_section == 'profile'}" do %>
+              <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              <span class="text-xs">Perfil</span>
+            <% end %>
+            
+            <%= link_to v1_user_orders_path,
+                class: "flex flex-col items-center p-2 rounded-lg transition-colors #{'bg-blue-50 text-blue-600' if @current_section == 'orders'}" do %>
+              <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+              </svg>
+              <span class="text-xs">Pedidos</span>
+            <% end %>
+            
+            <%= link_to v1_user_favorites_path,
+                class: "flex flex-col items-center p-2 rounded-lg transition-colors #{'bg-blue-50 text-blue-600' if @current_section == 'favorites'}" do %>
+              <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+              <span class="text-xs">Favoritos</span>
+            <% end %>
+            
+            <%= link_to v1_user_addresses_path,
+                class: "flex flex-col items-center p-2 rounded-lg transition-colors #{'bg-blue-50 text-blue-600' if @current_section == 'addresses'}" do %>
+              <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span class="text-xs">Endereços</span>
+            <% end %>
+            
+            <%= button_to destroy_user_session_path, method: :delete,
+                class: "flex flex-col items-center p-2 rounded-lg transition-colors text-red-600 hover:bg-red-50" do %>
+              <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+              </svg>
+              <span class="text-xs">Sair</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:flex lg:space-x-8">
+        <!-- Desktop Sidebar -->
+        <div class="hidden lg:block w-64 flex-shrink-0">
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Configurações</h2>
+            
+            <nav class="space-y-2">
+              <%= link_to v1_user_profile_path,
+                  class: "flex items-center space-x-3 p-3 rounded-lg transition-colors #{'bg-blue-50 text-blue-600 border-l-4 border-blue-600' if @current_section == 'profile'} #{'text-gray-700 hover:bg-gray-50' unless @current_section == 'profile'}" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <span class="font-medium">Meu Perfil</span>
+              <% end %>
+              
+              <%= link_to v1_user_orders_path,
+                  class: "flex items-center space-x-3 p-3 rounded-lg transition-colors #{'bg-blue-50 text-blue-600 border-l-4 border-blue-600' if @current_section == 'orders'} #{'text-gray-700 hover:bg-gray-50' unless @current_section == 'orders'}" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+                <span class="font-medium">Meus Pedidos</span>
+              <% end %>
+              
+              <%= link_to v1_user_favorites_path,
+                  class: "flex items-center space-x-3 p-3 rounded-lg transition-colors #{'bg-blue-50 text-blue-600 border-l-4 border-blue-600' if @current_section == 'favorites'} #{'text-gray-700 hover:bg-gray-50' unless @current_section == 'favorites'}" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+                <span class="font-medium">Favoritos</span>
+              <% end %>
+              
+              <%= link_to v1_user_addresses_path,
+                  class: "flex items-center space-x-3 p-3 rounded-lg transition-colors #{'bg-blue-50 text-blue-600 border-l-4 border-blue-600' if @current_section == 'addresses'} #{'text-gray-700 hover:bg-gray-50' unless @current_section == 'addresses'}" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span class="font-medium">Meus Endereços</span>
+              <% end %>
+              
+              <hr class="my-4">
+              
+              <%= button_to destroy_user_session_path, method: :delete,
+                  class: "flex items-center space-x-3 p-3 rounded-lg transition-colors text-red-600 hover:bg-red-50 w-full text-left" do %>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"></path>
+                </svg>
+                <span class="font-medium">Sair</span>
+              <% end %>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+          <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
