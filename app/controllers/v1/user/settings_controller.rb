@@ -8,17 +8,14 @@ class V1::User::SettingsController < ApplicationController
   end
 
   def orders
-    # TODO: Implementar quando tiver modelo de pedidos
     @orders = []
   end
 
   def favorites
-    # TODO: Implementar quando tiver modelo de favoritos
     @favorites = []
   end
 
   def addresses
-    # TODO: Implementar quando tiver modelo de endereços
     @addresses = []
   end
 
@@ -33,12 +30,10 @@ class V1::User::SettingsController < ApplicationController
   end
 
   def create_address
-    # TODO: Implementar quando tiver modelo de endereços
     redirect_to v1_user_addresses_path, notice: "Endereço adicionado com sucesso!"
   end
 
   def destroy_address
-    # TODO: Implementar quando tiver modelo de endereços
     redirect_to v1_user_addresses_path, notice: "Endereço removido com sucesso!"
   end
 

@@ -16,7 +16,6 @@ Rails.application.routes.draw do
     root "home#index"
     resources :products, only: [ :index, :show ]
 
-    # User settings routes
     namespace :user do
       root "settings#profile", as: :settings_root
       get "profile", to: "settings#profile"

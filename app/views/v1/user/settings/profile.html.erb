@@ -23,7 +23,6 @@
   <% end %>
 
   <%= form_with model: @user, url: v1_user_profile_path, method: :patch, local: true, class: "space-y-6" do |form| %>
-    <!-- Avatar Section -->
     <div class="flex items-center space-x-6">
       <div class="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center">
         <span class="text-2xl font-medium text-gray-600">
@@ -32,8 +31,7 @@
       </div>
       <div>
         <h3 class="text-lg font-medium text-gray-900"><%= @user.name %></h3>
-        <p class="text-sm text-gray-500">Membro desde <%= @user.created_at.strftime("%B de %Y") %></p>
-        <!-- TODO: Adicionar funcionalidade de upload de avatar quando implementar Active Storage para users -->
+        <p class="text-sm text-gray-500">Membro desde  <%= I18n.l(@user.created_at, format: "%d de %B de %Y") %></p>
         <button type="button" class="mt-2 text-sm text-blue-600 hover:text-blue-500 font-medium">
           Alterar foto
         </button>
@@ -42,7 +40,6 @@
 
     <hr>
 
-    <!-- Profile Information -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div>
         <%= form.label :name, "Nome completo", class: "block text-sm font-medium text-gray-700 mb-2" %>
@@ -89,7 +86,6 @@
 
     <hr>
 
-    <!-- Account Settings -->
     <div>
       <h3 class="text-lg font-medium text-gray-900 mb-4">Configurações da Conta</h3>
       <div class="space-y-4">
