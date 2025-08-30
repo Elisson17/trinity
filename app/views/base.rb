@@ -11,6 +11,7 @@ class Views::Base < Components::Base
   include Phlex::Rails::Helpers::FormWith
   include Phlex::Rails::Helpers::LinkTo
   include Phlex::Rails::Helpers::L
+  include Phlex::Rails::Helpers::ImageTag
   include ActionView::Helpers::CsrfHelper
   include ActionView::Helpers::DateHelper
   include ERB::Util

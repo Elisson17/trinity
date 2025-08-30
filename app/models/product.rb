@@ -15,6 +15,7 @@ class Product < ApplicationRecord
   before_validation :normalize_price
   before_validation :generate_sku, if: -> { sku.blank? }
   before_validation :format_name
+  validate :acceptable_images
 
   def formatted_price
     "R$ #{price.to_f.round(2).to_s.gsub('.', ',')}"

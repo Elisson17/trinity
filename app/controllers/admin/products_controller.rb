@@ -15,6 +15,7 @@ class Admin::ProductsController < Admin::BaseController
   end
 
   def show
+    render Views::Admin::Products::Show.new(product: @product)
   end
 
   def new
@@ -50,7 +51,7 @@ class Admin::ProductsController < Admin::BaseController
 
   def update
     params_hash = product_params
-    p params_hash
+
     if params_hash[:price].present? && params_hash[:price].is_a?(String)
       normalized_price = params_hash[:price].to_s
                                            .strip

@@ -41,7 +41,7 @@ class Views::Admin::Products::New < Views::Base
   def product_form
     div class: "bg-white shadow sm:rounded-lg" do
       div class: "px-4 py-5 sm:p-6" do
-        form_with model: [ :admin, @product ], local: true, class: "space-y-6" do |form|
+        form_with model: [ :admin, @product ], local: true, multipart: true, class: "space-y-6" do |form|
           error_messages if @product.errors.any?
 
           Form do
