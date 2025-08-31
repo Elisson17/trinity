@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  # WhatsApp verification routes
+  get "whatsapp_verification", to: "whatsapp_verifications#show"
+  post "whatsapp_verification", to: "whatsapp_verifications#create"
+  post "whatsapp_verification/resend", to: "whatsapp_verifications#resend", as: :resend_whatsapp_verification
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: redirect("/v1")
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

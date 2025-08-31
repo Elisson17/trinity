@@ -19,6 +19,9 @@ gem "cssbundling-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+# HTTP requests
+gem "httparty"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -79,7 +82,7 @@ gem "kaminari", "~> 1.2"
 
 gem "rails_icons", "~> 1.4"
 
-gem "byebug", "~> 12.0", groups: [:development, :test]
+gem "byebug", "~> 12.0", groups: [ :development, :test ]
 
 # gem "phlex-icons", "~> 2.35"
 

@@ -14,6 +14,39 @@
   <body class="bg-gray-50 min-h-screen">
     <%= render "components/header" %>
     
+    <!-- Aviso de conta não verificada -->
+    <% if user_signed_in? && !current_user.verified? %>
+      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+        <div class="container mx-auto px-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
+            <div class="flex items-center">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-yellow-700">
+                  <strong class="hidden sm:inline">Conta não verificada:</strong>
+                  <span class="sm:hidden font-medium">WhatsApp não verificado</span>
+                  <span class="hidden sm:inline">Verifique seu WhatsApp para acessar todos os recursos.</span>
+                </p>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              <%= link_to whatsapp_verification_path, 
+                  class: "inline-flex items-center justify-center bg-yellow-100 hover:bg-yellow-200 text-yellow-800 px-4 py-2 rounded-md text-sm font-medium transition-colors w-full sm:w-auto" do %>
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Verificar agora
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    
     <div class="container mx-auto px-4 py-6">
       <div class="lg:hidden mb-6">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
