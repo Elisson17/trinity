@@ -49,8 +49,8 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json yarn.lock ./
-RUN yarn install --immutable
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Copy application code
 COPY . .
