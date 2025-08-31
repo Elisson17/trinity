@@ -86,7 +86,7 @@ production:
   primary: &primary_production
     <<: *default
     database: trinity_production
-    username: trinity
+    username: <%= ENV.fetch("TRINITY_DATABASE_USERNAME", "trinity") %>
     password: <%= ENV["TRINITY_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
