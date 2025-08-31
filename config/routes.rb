@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
+  mount MissionControl::Jobs::Engine, at: "/admin/jobs_queue"
 
-  # WhatsApp verification routes
   get "whatsapp_verification", to: "whatsapp_verifications#show"
   post "whatsapp_verification", to: "whatsapp_verifications#create"
   get "whatsapp_verification/resend", to: "whatsapp_verifications#resend", as: :resend_whatsapp_verification
@@ -35,7 +35,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Admin routes
   namespace :admin do
     root "dashboard#index"
     resources :products do
