@@ -9,7 +9,7 @@ class WhatsappVerificationsController < ApplicationController
     code = params[:verification_code]
 
     if current_user.verify_whatsapp_code(code)
-      EvolutionWhatsappService.send_welcome_message(current_user.phone_number, current_user.name)
+      SendWhatsappWelcomeJob.perform_later(current_user.phone_number, current_user.name)
       flash[:notice] = "Conta verificada com sucesso! Bem-vindo(a) à Trinity! 🎉"
       redirect_to v1_root_path
     else

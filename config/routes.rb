@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   # WhatsApp verification routes
   get "whatsapp_verification", to: "whatsapp_verifications#show"
   post "whatsapp_verification", to: "whatsapp_verifications#create"
-  post "whatsapp_verification/resend", to: "whatsapp_verifications#resend", as: :resend_whatsapp_verification
+  get "whatsapp_verification/resend", to: "whatsapp_verifications#resend", as: :resend_whatsapp_verification
+  post "whatsapp_verification/resend", to: "whatsapp_verifications#resend"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: redirect("/v1")

@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   def generate_verification_code!
     generate_whatsapp_verification_code
-    send_whatsapp_verification
+    SendWhatsappVerificationJob.perform_later(phone_number, whatsapp_code, name)
     save
   end
 
@@ -75,7 +75,7 @@ class User < ApplicationRecord
   end
 
   def send_whatsapp_verification
-    EvolutionWhatsappService.send_verification_code(phone_number, whatsapp_code, name)
+    SendWhatsappVerificationJob.perform_later(phone_number, whatsapp_code, name)
   rescue => e
     Rails.logger.error "Erro ao enviar código WhatsApp: #{e.message}"
   end

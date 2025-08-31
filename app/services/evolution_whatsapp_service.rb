@@ -1,17 +1,10 @@
 class EvolutionWhatsappService
-  BASE_URL = ENV.fetch("EVOLUTION_API_URL", "http://evo-oo8cgs8oskgs40wo8ccg88cs.31.220.95.69.sslip.io/")
+  BASE_URL = ENV.fetch("EVOLUTION_API_URL", "http://evo-oo8cgs8oskgs40wo8ccg88cs.31.220.95.69.sslip.io")
   NAME_INSTANCE = "mistya"
-  def initialize(phone_number:, whatsapp_code:, name:)
-    @phone_number = phone_number
-    @whatsapp_code = whatsapp_code
-    @name = name
-  end
 
-
-  def send_verification_code
-    clean_phone = format_phone_number(@phone_number)
-
-    message = build_verification_message(@name, @whatsapp_code)
+  def self.send_verification_code(phone_number:, whatsapp_code:, name:)
+    clean_phone = format_phone_number(phone_number)
+    message = build_verification_message(name, whatsapp_code)
 
     response = send_message(clean_phone, message)
 
@@ -27,10 +20,9 @@ class EvolutionWhatsappService
     false
   end
 
-  def send_welcome_message
-    clean_phone = format_phone_number(@phone_number)
-
-    message = build_welcome_message(@name)
+  def self.send_welcome_message(phone_number:, name:)
+    clean_phone = format_phone_number(phone_number)
+    message = build_welcome_message(name)
 
     response = send_message(clean_phone, message)
 
@@ -52,7 +44,7 @@ class EvolutionWhatsappService
     clean
   end
 
-  def send_message(phone_number, message)
+  def self.send_message(phone_number, message)
     HTTParty.post("#{BASE_URL}/message/sendText/#{NAME_INSTANCE}", {
       headers: {
         "Content-Type" => "application/json",
@@ -65,7 +57,7 @@ class EvolutionWhatsappService
     })
   end
 
-  def build_verification_message(name, code)
+  def self.build_verification_message(name, code)
     <<~MSG
       🔐 *Código de Verificação - Trinity*
 
@@ -81,7 +73,7 @@ class EvolutionWhatsappService
     MSG
   end
 
-  def build_welcome_message(name)
+  def self.build_welcome_message(name)
     <<~MSG
       🎉 *Bem-vindo(a) à Trinity!*
 
