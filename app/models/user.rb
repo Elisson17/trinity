@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :addresses, dependent: :destroy
+
   validates :name, presence: { message: "Nome é obrigatório" }
   validates :email, presence: { message: "E-mail é obrigatório" },
                    uniqueness: { message: "Este e-mail já está sendo usado por outra conta" }
@@ -42,6 +44,10 @@ class User < ApplicationRecord
 
   def user?
     role == "user"
+  end
+
+  def default_address
+    addresses.default.first
   end
 
   # Retorna o telefone formatado para exibição

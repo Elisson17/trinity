@@ -35,10 +35,8 @@ class EvolutionWhatsappService
   private
 
   def self.format_phone_number(phone)
-    # O número já vem limpo do banco (apenas dígitos)
     clean = phone.gsub(/\D/, "")
 
-    # Adiciona código do Brasil se necessário
     clean = "55#{clean}" unless clean.start_with?("55")
 
     clean
