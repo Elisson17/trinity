@@ -84,3 +84,5 @@ gem "byebug", "~> 12.0", groups: [:development, :test]
 # gem "phlex-icons", "~> 2.35"
 
 gem "phlex-icons-lucide", "~> 2.35"
+
+gem "aws-sdk-s3", "~> 1.198"

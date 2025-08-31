@@ -32,3 +32,12 @@ local:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
+
+minio:
+  service: S3
+  access_key_id: 0qyuUO7J8H0vmcNX
+  secret_access_key: kBSida7Ij8YKa6nYQ0eInbzUGOZe76En
+  region: us-east-1
+  bucket: mistya
+  endpoint: https://minio-loos4wkks8c88848k4w44s8o.31.220.95.69.sslip.io
+  force_path_style: true
