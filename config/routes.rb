@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       get "addresses", to: "settings#addresses"
       patch "profile", to: "settings#update_profile"
       post "addresses", to: "settings#create_address"
+      patch "addresses/:id", to: "settings#update_address", as: :update_address
       delete "addresses/:id", to: "settings#destroy_address", as: :destroy_address
     end
   end

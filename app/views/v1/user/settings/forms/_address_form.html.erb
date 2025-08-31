@@ -1,0 +1,109 @@
+<%= form_with(model: address, url: address.persisted? ? v1_user_update_address_path(address) : v1_user_addresses_path, local: true, html: { id: "address_form" }) do |f| %>
+  <div class="space-y-6">
+
+    <%= f.hidden_field :user_id, value: current_user.id %>
+
+    <%= render RubyUI::FormField.new do %>
+      <%= render RubyUI::FormFieldLabel.new, for: "address_nickname" do %>
+        Nome do endereço
+      <% end %>
+      <%= f.text_field :nickname, id: "address_nickname", placeholder: "Ex: Casa, Trabalho, Apartamento...", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+    <% end %>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_cep" do %>
+          CEP
+        <% end %>
+        <%= f.text_field :cep,
+            id: "address_cep",
+            placeholder: "00000-000",
+            maxlength: 9,
+            class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
+            data: { address_form_target: "cep", action: "blur->address-form#searchCep input->address-form#formatCep" } %>
+      <% end %>
+
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_street" do %>
+          Rua/Logradouro
+        <% end %>
+        <%= f.text_field :street,
+            id: "address_street",
+            placeholder: "Nome da rua",
+            class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
+            data: { address_form_target: "street" } %>
+      <% end %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_number" do %>
+          Número
+        <% end %>
+        <%= f.text_field :number, id: "address_number", placeholder: "123", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+      <% end %>
+
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_complement" do %>
+          Complemento
+        <% end %>
+        <%= f.text_field :complement, id: "address_complement", placeholder: "Apt, Bloco, etc. (opcional)", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm" %>
+      <% end %>
+
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_neighborhood" do %>
+          Bairro
+        <% end %>
+        <%= f.text_field :neighborhood,
+            id: "address_neighborhood",
+            placeholder: "Nome do bairro",
+            class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
+            data: { address_form_target: "neighborhood" } %>
+      <% end %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_city" do %>
+          Cidade
+        <% end %>
+        <%= f.text_field :city, id: "address_city", placeholder: "Nome da cidade", class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm", data: { address_form_target: "city" } %>
+      <% end %>
+
+      <%= render RubyUI::FormField.new do %>
+        <%= render RubyUI::FormFieldLabel.new, for: "address_state" do %>
+          Estado
+        <% end %>
+        <%= f.text_field :state,
+            id: "address_state",
+            placeholder: "SP",
+            maxlength: 2,
+            style: "text-transform: uppercase",
+            class: "mt-1 block w-full border-gray-300 rounded-md shadow-sm",
+            data: { address_form_target: "state" } %>
+      <% end %>
+    </div>
+
+    <% unless address.persisted? %>
+      <div class="flex items-center space-x-2">
+        <%= f.check_box :is_default, id: "address_is_default", class: "rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" %>
+        <label for="address_is_default" class="text-sm text-gray-700">
+          Definir como endereço principal
+        </label>
+      </div>
+    <% end %>
+
+    <div class="flex justify-end space-x-3 pt-4 gap-3">
+      <%= render RubyUI::Button.new(
+        variant: :outline,
+        type: "button",
+        data: { action: "click->ruby-ui--dialog#dismiss" }
+      ) do %>
+        Cancelar
+      <% end %>
+
+      <%= f.submit address.persisted? ? "Atualizar Endereço" : "Salvar Endereço",
+          class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+    </div>
+  </div>
+<% end %>

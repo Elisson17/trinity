@@ -1,0 +1,22 @@
+<%= render RubyUI::Dialog.new do %>
+  <%= render RubyUI::DialogTrigger.new do %>
+    <%= render RubyUI::Button.new(
+      class: "inline-flex items-center px-2 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors gap-2"
+    ) do %>
+      <%= icon "plus", class: "w-6 h-6 text-white" %>
+      <%= trigger_text %>
+    <% end %>
+  <% end %>
+
+  <%= render RubyUI::DialogContent.new do %>
+    <%= render RubyUI::DialogHeader.new do %>
+      <%= render RubyUI::DialogTitle.new do %>
+        <h2 class="text-lg font-medium text-gray-900"><%= title %></h2>
+      <% end %>
+    <% end %>
+
+    <%= render RubyUI::DialogMiddle.new do %>
+      <%= yield if block_given? %>
+    <% end %>
+  <% end %>
+<% end %>

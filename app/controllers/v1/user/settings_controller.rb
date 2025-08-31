@@ -16,7 +16,7 @@ class V1::User::SettingsController < ApplicationController
   end
 
   def addresses
-    @addresses = []
+    @addresses = current_user.addresses
   end
 
   def update_profile
@@ -29,13 +29,41 @@ class V1::User::SettingsController < ApplicationController
     end
   end
 
-  def create_address
-    redirect_to v1_user_addresses_path, notice: "Endereço adicionado com sucesso!"
-  end
+def create_address
+  @address = current_user.addresses.build(address_params)
 
-  def destroy_address
-    redirect_to v1_user_addresses_path, notice: "Endereço removido com sucesso!"
+  if @address.save
+    redirect_to v1_user_addresses_path, notice: "Endereço adicionado com sucesso!"
+  else
+    @addresses = current_user.addresses
+    flash.now[:alert] = @address.errors.full_messages.join(", ")
+    render :addresses, status: :unprocessable_entity
   end
+end
+
+def update_address
+  @address = current_user.addresses.find(params[:id])
+
+  if @address.update(address_params)
+    redirect_to v1_user_addresses_path, notice: "Endereço atualizado com sucesso!"
+  else
+    @addresses = current_user.addresses
+    flash.now[:alert] = @address.errors.full_messages.join(", ")
+    render :addresses, status: :unprocessable_entity
+  end
+end
+
+
+def destroy_address
+  @address = current_user.addresses.find(params[:id])
+
+  if @address.destroy
+    redirect_to v1_user_addresses_path, notice: "Endereço removido com sucesso!"
+  else
+    redirect_to v1_user_addresses_path, alert: "Não foi possível remover o endereço."
+  end
+end
+
 
   private
 
@@ -45,5 +73,9 @@ class V1::User::SettingsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :phone_number)
+  end
+
+  def address_params
+    params.require(:address).permit(:nickname, :cep, :street, :number, :complement, :neighborhood, :city, :state, :is_default)
   end
 end
