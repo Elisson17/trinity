@@ -48,7 +48,7 @@ class User < ApplicationRecord
   def formatted_phone_number
     return phone_number if phone_number.blank?
 
-    clean = phone_number.gsub(/\D/, '')
+    clean = phone_number.gsub(/\D/, "")
     return phone_number if clean.length < 10
 
     if clean.length == 11
@@ -66,7 +66,7 @@ class User < ApplicationRecord
     return if phone_number.blank?
 
     # Remove todos os caracteres não numéricos
-    self.phone_number = phone_number.gsub(/\D/, '')
+    self.phone_number = phone_number.gsub(/\D/, "")
   end
 
   def generate_whatsapp_verification_code
