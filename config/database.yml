@@ -84,12 +84,12 @@ test:
 #
 production:
   primary: &primary_production
-    <<: *default
+    # <<: *default
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: trinity_production
-    username: <%= ENV.fetch("TRINITY_DATABASE_USERNAME", "postgres") %>
-    password: <%= ENV.fetch("TRINITY_DATABASE_PASSWORD", "iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN") %>
-    host: <%= ENV.fetch("TRINITY_DATABASE_HOST", "e0osk80owwcks4kccgc4ssso") %>
-    port: <%= ENV.fetch("TRINITY_DATABASE_PORT", 5432) %>
+    url: <%= EN.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production") %>
   cache:
     <<: *primary_production
     database: trinity_production_cache
