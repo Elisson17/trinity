@@ -12,12 +12,9 @@ class User < ApplicationRecord
   validates :phone_number, presence: { message: "Número do WhatsApp é obrigatório" },
                           uniqueness: { message: "Este número já está sendo usado por outra conta" }
 
-  # Callbacks
   before_save :clean_phone_number
   before_create :generate_whatsapp_verification_code
   after_create :send_whatsapp_verification
-
-  attr_accessor :whatsapp_verification_code
 
   def verified?
     phone_verified_at.present?
@@ -50,7 +47,6 @@ class User < ApplicationRecord
     addresses.default.first
   end
 
-  # Retorna o telefone formatado para exibição
   def formatted_phone_number
     return phone_number if phone_number.blank?
 
@@ -71,7 +67,6 @@ class User < ApplicationRecord
   def clean_phone_number
     return if phone_number.blank?
 
-    # Remove todos os caracteres não numéricos
     self.phone_number = phone_number.gsub(/\D/, "")
   end
 
