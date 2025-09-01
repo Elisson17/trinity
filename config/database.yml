@@ -89,7 +89,7 @@ production:
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: trinity_production
-    url: <%= EN.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production") %>
+    url: <%= ENV.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production") %>
   cache:
     <<: *primary_production
     database: trinity_production_cache
