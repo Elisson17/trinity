@@ -68,6 +68,10 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Use Solid Queue in Development.
+  config.active_job.queue_adapter = :solid_queue
+  config.solid_queue.connects_to = { database: { writing: :queue } }
+
   config.hotwire_livereload.force_reload_paths << Rails.root.join("app/assets/stylesheets")
   config.hotwire_livereload.force_reload_paths << Rails.root.join("app/javascript")
 
