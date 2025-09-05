@@ -7,6 +7,7 @@ if [ -z "${LD_PRELOAD+x}" ]; then
 fi
 
 if [ "${1}" == "jobs" ]; then
+  ./bin/rails db:prepare
   exec ./bin/jobs
 fi
 

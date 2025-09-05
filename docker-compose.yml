@@ -26,11 +26,7 @@ services:
       target: jobs
     environment:
       RAILS_ENV: production
-      DATABASE_URL: postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production
-      TRINITY_DATABASE_USERNAME: postgres
-      TRINITY_DATABASE_PASSWORD: iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN
-      TRINITY_DATABASE_HOST: e0osk80owwcks4kccgc4ssso
-      TRINITY_DATABASE_PORT: 5432
+      DATABASE_URL: postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@ik0sowk08w4g0oko8k8o4cg8:5432/trinity_production_queue
       RAILS_MASTER_KEY: 10e856daa901523db5480e4487fe09b6
       JOB_CONCURRENCY: 2
     restart: always

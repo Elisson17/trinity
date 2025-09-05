@@ -101,6 +101,7 @@ production:
   queue:
     <<: *primary_production
     database: trinity_production_queue
+    url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@ik0sowk08w4g0oko8k8o4cg8:5432/trinity_production_queue") %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
