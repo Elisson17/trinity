@@ -1,27 +1,24 @@
-version: "3.9"
+version: "3.8"
 
 services:
   web:
     build:
-      context: ../../
+      context: ../..
+      dockerfile: Dockerfile
       target: web
     ports:
       - "3000:3000"
     environment:
-      - RAILS_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production
     restart: always
 
-  queue:
+  jobs:
     build:
-      context: ../../
+      context: ../..
+      dockerfile: Dockerfile
       target: jobs
     environment:
-      - RAILS_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
-      - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
-      - JOB_CONCURRENCY=2
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/trinity_production
     restart: always
-    depends_on:
-      - web
