@@ -99,7 +99,10 @@ production:
     database: trinity_production_cache
     migrations_paths: db/cache_migrate
   queue:
-    <<: *primary_production
+    # <<: *primary_production
+    adapter: postgresql
+    encoding: unicode
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: trinity_production_queue
     url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@ik0sowk08w4g0oko8k8o4cg8:5432/postgres") %>
     migrations_paths: db/queue_migrate
