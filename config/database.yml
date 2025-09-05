@@ -23,7 +23,6 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-
 development:
   primary: &primary_development
     <<: *default
@@ -87,17 +86,12 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    # <<: *default
+  primary: &primary_production # <<: *default
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: trinity_production
-    username: postgres
-    password: iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN
-    host: e0osk80owwcks4kccgc4ssso
-    port: 5432
-    url: postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@e0osk80owwcks4kccgc4ssso:5432/postgres
+    url: <%= ENV.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@31.220.95.69:27543/postgres") %>
   cache:
     <<: *primary_production
     database: trinity_production_cache
@@ -107,12 +101,7 @@ production:
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    database: trinity_production_queue
-    username: postgres
-    password: SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B
-    host: ik0sowk08w4g0oko8k8o4cg8
-    port: 5432
-    url: postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@ik0sowk08w4g0oko8k8o4cg8:5432/postgres
+    url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@31.220.95.69:27542/postgres") %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
