@@ -3,7 +3,7 @@ version: "3.8"
 services:
   web:
     build:
-      context: ../../
+      context: .
       dockerfile: Dockerfile
       target: web
     ports:
@@ -21,7 +21,7 @@ services:
 
   jobs:
     build:
-      context: ../../
+      context: .
       dockerfile: Dockerfile
       target: jobs
     environment:
