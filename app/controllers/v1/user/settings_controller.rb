@@ -25,7 +25,7 @@ class V1::User::SettingsController < ApplicationController
     if @user.update(user_params)
       redirect_to v1_user_profile_path, notice: "Perfil atualizado com sucesso!"
     else
-      render :profile, status: :unprocessable_entity
+      render :profile, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ def create_address
   else
     @addresses = current_user.addresses
     flash.now[:alert] = @address.errors.full_messages.join(", ")
-    render :addresses, status: :unprocessable_entity
+    render :addresses, status: :unprocessable_content
   end
 end
 
@@ -49,7 +49,7 @@ def update_address
   else
     @addresses = current_user.addresses
     flash.now[:alert] = @address.errors.full_messages.join(", ")
-    render :addresses, status: :unprocessable_entity
+    render :addresses, status: :unprocessable_content
   end
 end
 

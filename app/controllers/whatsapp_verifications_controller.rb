@@ -14,7 +14,7 @@ class WhatsappVerificationsController < ApplicationController
       redirect_to v1_root_path
     else
       flash[:alert] = "Código inválido ou expirado. Tente novamente."
-      render :show, status: :unprocessable_entity
+      render :show, status: :unprocessable_content
     end
   end
 

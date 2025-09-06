@@ -41,7 +41,7 @@ class Admin::ProductsController < Admin::BaseController
     if @product.save
       redirect_to admin_products_path, notice: "Produto criado com sucesso!"
     else
-      render Views::Admin::Products::New.new(product: @product), status: :unprocessable_entity
+      render Views::Admin::Products::New.new(product: @product), status: :unprocessable_content
     end
   end
 
@@ -66,7 +66,7 @@ class Admin::ProductsController < Admin::BaseController
     if @product.update(params_hash)
       redirect_to admin_product_path(@product), notice: "Produto atualizado com sucesso!"
     else
-      render Views::Admin::Products::Edit.new(product: @product), status: :unprocessable_entity
+      render Views::Admin::Products::Edit.new(product: @product), status: :unprocessable_content
     end
   end
 
