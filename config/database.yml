@@ -91,7 +91,7 @@ production:
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     database: trinity_production
-    url: <%= ENV.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@31.220.95.69:27543/postgres") %>
+    url: <%= ENV.fetch("TRINITY_DATABASE_URL", "postgres://postgres:iO6mhfDWsBV2EFOcPDsRCiBLi3fWxs8kHYkIpAbZPCPn6k4XCcBoXoh8yNtaU6cN@31.220.95.69:27543/trinity_production") %>
   cache:
     <<: *primary_production
     database: trinity_production_cache
@@ -101,7 +101,7 @@ production:
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@31.220.95.69:27542/postgres") %>
+    url: <%= ENV.fetch("DATABASE_URL", "postgres://postgres:SLkk2tcdgeFg15HXKqWU90ig6apVJHDkhDmAjb0oaHZTOtOjzHENNcYA5i2EWu1B@31.220.95.69:27542/trinity_production_queue") %>
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
