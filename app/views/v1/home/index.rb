@@ -91,18 +91,27 @@ class Views::V1::Home::Index < Views::Base
           end
         end
 
-        CardContent(class: "p-4 flex-1") do
+        CardContent(class: "p-4 flex-1 flex flex-col") do
           CardTitle(class: "text-lg font-semibold text-gray-800 mb-2 h-12 overflow-hidden") do
             product.name
           end
 
-          CardDescription(class: "text-gray-600 mb-3 h-16 overflow-hidden text-sm") do
+          CardDescription(class: "text-gray-600 mb-3 h-16 overflow-hidden text-sm flex-1") do
             product.description.truncate(100)
           end
 
-          div class: "mt-auto" do
+          div class: "mt-auto space-y-3" do
             p class: "text-xl font-bold text-green-600" do
               product.formatted_price
+            end
+
+            button class: "w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors",
+                   data_controller: "cart",
+                   data_action: "click->cart#addToCart",
+                   data_product_id: product.id,
+                   data_quantity: "1",
+                   onclick: safe("event.stopPropagation(); event.preventDefault();") do
+              "🛒 Adicionar ao Carrinho"
             end
           end
         end

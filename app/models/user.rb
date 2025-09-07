@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :addresses, dependent: :destroy
+  has_many :carts, dependent: :destroy
 
   validates :name, presence: { message: "Nome é obrigatório" }
   validates :email, presence: { message: "E-mail é obrigatório" },
@@ -75,6 +76,14 @@ class User < ApplicationRecord
     else
       phone_number
     end
+  end
+
+  def current_cart
+    carts.first || carts.create
+  end
+
+  def cart_items_count
+    current_cart.total_items
   end
 
   private

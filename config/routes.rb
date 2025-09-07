@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     root "home#index"
     resources :products, only: [ :index, :show ]
 
+    get "cart", to: "cart#show", as: :cart
+    post "cart/add_item", to: "cart#add_item", as: :cart_add_item
+    patch "cart/update_item", to: "cart#update_item", as: :cart_update_item
+    delete "cart/remove_item", to: "cart#remove_item", as: :cart_remove_item
+    delete "cart/clear", to: "cart#clear", as: :cart_clear
+
     namespace :user do
       root "settings#profile", as: :settings_root
       get "profile", to: "settings#profile"

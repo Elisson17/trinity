@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
   has_many_attached :images
+  has_many :cart_items, dependent: :destroy
+  has_many :carts, through: :cart_items
 
   validates :name, presence: true, length: { minimum: 3, maximum: 100 }
   validates :description, presence: true, length: { minimum: 10 }
@@ -69,17 +71,14 @@ class Product < ApplicationRecord
   end
 
   def normalize_price
-    # Normaliza o preço se for uma string (caso não tenha sido normalizado no controller)
     if price.is_a?(String) && price.present?
-      # Remove "R$ " e converte vírgula para ponto
       normalized_price = price.to_s
                              .strip
-                             .gsub(/^R\$\s*/, "") # Remove R$ do início
-                             .gsub(/\s/, "")      # Remove espaços
-                             .gsub(/\.(?=\d{3,})/, "") # Remove pontos de milhares (ex: 1.000)
-                             .gsub(",", ".")      # Converte vírgula decimal para ponto
+                             .gsub(/^R\$\s*/, "")
+                             .gsub(/\s/, "")
+                             .gsub(/\.(?=\d{3,})/, "")
+                             .gsub(",", ".")
 
-      # Só atribui se conseguir converter para um número válido
       if normalized_price.match?(/^\d+\.?\d*$/) && normalized_price.to_f > 0
         self.price = normalized_price.to_f
       end
