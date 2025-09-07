@@ -16,7 +16,7 @@ class V1::User::SettingsController < ApplicationController
   end
 
   def addresses
-    @addresses = current_user.addresses
+    @addresses = current_user.addresses.ordered
   end
 
   def update_profile
@@ -56,6 +56,16 @@ end
 
 def destroy_address
   @address = current_user.addresses.find(params[:id])
+
+  if current_user.addresses.count == 1
+    redirect_to v1_user_addresses_path, alert: "Não é possível excluir o único endereço cadastrado."
+    return
+  end
+
+  if @address.is_default? && current_user.addresses.count > 1
+    other_address = current_user.addresses.where.not(id: @address.id).first
+    other_address.update(is_default: true) if other_address
+  end
 
   if @address.destroy
     redirect_to v1_user_addresses_path, notice: "Endereço removido com sucesso!"

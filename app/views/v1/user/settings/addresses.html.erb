@@ -39,32 +39,46 @@
               <%= render "components/modal", trigger_text: "Editar", title: "Editar endereço" do %>
                 <%= render "v1/user/settings/forms/address_form", address: address %>
               <% end %>
-          <%= render RubyUI::AlertDialog.new do %>
-            <%= render RubyUI::AlertDialogTrigger.new do %>
-              <%= render RubyUI::Button.new(variant: :outline, class: "text-red-600 hover:text-red-500 text-sm font-medium") do %>
-                Excluir
+              
+              <% if @addresses.count > 1 %>
+                <%= render RubyUI::AlertDialog.new do %>
+                  <%= render RubyUI::AlertDialogTrigger.new do %>
+                    <%= render RubyUI::Button.new(variant: :outline, class: "text-red-600 hover:text-red-500 text-sm font-medium") do %>
+                      Excluir
+                    <% end %>
+                  <% end %>
+
+                  <%= render RubyUI::AlertDialogContent.new do %>
+                    <%= render RubyUI::AlertDialogHeader.new do %>
+                      <%= render RubyUI::AlertDialogTitle.new do %>
+                        Excluir endereço
+                      <% end %>
+                      <%= render RubyUI::AlertDialogDescription.new do %>
+                        Tem certeza que deseja excluir o endereço "<%= address.nickname %>"? 
+                        <% if address.is_default? %>
+                          <br><strong>Atenção:</strong> Este é seu endereço principal. Outro endereço será automaticamente definido como principal.
+                        <% end %>
+                        <br>Esta ação não pode ser desfeita.
+                      <% end %>
+                    <% end %>
+
+                    <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-200">
+                      <%= render RubyUI::Button.new(
+                        variant: :outline,
+                        class: "px-4 py-2",
+                        data: { action: "click->ruby-ui--alert-dialog#dismiss" }
+                      ) do %>
+                        Cancelar
+                      <% end %>
+
+                      <%= button_to "Confirmar Exclusão", 
+                          v1_user_destroy_address_path(address), 
+                          method: :delete, 
+                          class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors" %>
+                    </div>
+                  <% end %>
+                <% end %>
               <% end %>
-            <% end %>
-
-            <%= render RubyUI::AlertDialogContent.new do %>
-              <%= render RubyUI::AlertDialogHeader.new do %>
-                <%= render RubyUI::AlertDialogTitle.new do %>
-                  Excluir endereço
-                <% end %>
-                <%= render RubyUI::AlertDialogDescription.new do %>
-                  Tem certeza que deseja excluir o endereço "<%= address.nickname %>"? Esta ação não pode ser desfeita.
-                <% end %>
-              <% end %>
-
-              <div class="flex justify-end gap-2 mt-4">
-                <%= render RubyUI::Button.new(variant: :outline, data: { action: "click->ruby-ui--dialog#dismiss" }) do %>
-                  Cancelar
-                <% end %>
-
-                <%= button_to "Confirmar", v1_user_destroy_address_path(address), method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700" %>
-              </div>
-            <% end %>
-          <% end %>
             </div>
           </div>
         </div>

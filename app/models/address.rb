@@ -10,6 +10,8 @@ class Address < ApplicationRecord
   validates :city, presence: { message: "Cidade é obrigatória" }
   validates :state, presence: { message: "Estado é obrigatório" }
 
+  validate :ensure_has_one_default_address
+
   before_save :ensure_only_one_default
   before_save :clean_cep
 
@@ -36,12 +38,16 @@ class Address < ApplicationRecord
   private
 
   def ensure_only_one_default
-    if is_default_changed? && is_default?
+    if is_default?
       user.addresses.where.not(id: id).update_all(is_default: false)
     end
 
-    # Se é o primeiro endereço do usuário, torna-o padrão automaticamente
-    if user.addresses.count == 0
+    existing_addresses_count = user.addresses.where.not(id: id).count
+    if existing_addresses_count == 0
+      self.is_default = true
+    end
+
+    if !marked_for_destruction? && user.addresses.where(is_default: true).where.not(id: id).count == 0 && !is_default?
       self.is_default = true
     end
   end
@@ -49,5 +55,16 @@ class Address < ApplicationRecord
   def clean_cep
     return if cep.blank?
     self.cep = cep.gsub(/\D/, "")
+  end
+
+  def ensure_has_one_default_address
+    return if marked_for_destruction?
+
+    if !is_default? && is_default_changed?
+      other_defaults = user.addresses.where.not(id: id).where(is_default: true)
+      if other_defaults.empty?
+        errors.add(:is_default, "Deve existir pelo menos um endereço principal")
+      end
+    end
   end
 end
