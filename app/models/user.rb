@@ -22,17 +22,32 @@ class User < ApplicationRecord
 
   def verify_whatsapp_code(code)
     if whatsapp_code == code && whatsapp_code_expires_at > Time.current
-      update(phone_verified_at: Time.current, whatsapp_code: nil, whatsapp_code_expires_at: nil)
-      true
+      result = update_columns(
+        phone_verified_at: Time.current,
+        whatsapp_code: nil,
+        whatsapp_code_expires_at: nil
+      )
+      result
     else
       false
     end
   end
 
   def generate_verification_code!
+    return false if phone_number.blank?
+
     generate_whatsapp_verification_code
     SendWhatsappVerificationJob.perform_later(phone_number, whatsapp_code, name)
-    save
+
+    update_columns(
+      whatsapp_code: whatsapp_code,
+      whatsapp_code_expires_at: whatsapp_code_expires_at
+    )
+
+    true
+  rescue => e
+    Rails.logger.error "Erro ao gerar código de verificação: #{e.message}"
+    false
   end
 
   def admin?
@@ -67,7 +82,8 @@ class User < ApplicationRecord
   def clean_phone_number
     return if phone_number.blank?
 
-    self.phone_number = phone_number.gsub(/\D/, "")
+    cleaned = phone_number.to_s.strip.gsub(/\D/, "")
+    self.phone_number = cleaned unless cleaned.blank?
   end
 
   def generate_whatsapp_verification_code

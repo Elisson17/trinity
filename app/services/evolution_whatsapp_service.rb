@@ -3,6 +3,11 @@ class EvolutionWhatsappService
   NAME_INSTANCE = "mistya"
 
   def self.send_verification_code(phone_number:, whatsapp_code:, name:)
+    if phone_number.blank?
+      Rails.logger.error "Número de telefone não fornecido para #{name}"
+      return false
+    end
+
     clean_phone = format_phone_number(phone_number)
     message = build_verification_message(name, whatsapp_code)
 
@@ -21,6 +26,11 @@ class EvolutionWhatsappService
   end
 
   def self.send_welcome_message(phone_number:, name:)
+    if phone_number.blank?
+      Rails.logger.error "Número de telefone não fornecido para mensagem de boas-vindas para #{name}"
+      return false
+    end
+
     clean_phone = format_phone_number(phone_number)
     message = build_welcome_message(name)
 
@@ -35,6 +45,8 @@ class EvolutionWhatsappService
   private
 
   def self.format_phone_number(phone)
+    return nil if phone.blank?
+
     clean = phone.gsub(/\D/, "")
 
     clean = "55#{clean}" unless clean.start_with?("55")

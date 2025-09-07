@@ -82,7 +82,7 @@ end
   end
 
   def user_params
-    params.require(:user).permit(:name, :phone_number)
+    params.require(:user).permit(:email, :name, :phone_number)
   end
 
   def address_params

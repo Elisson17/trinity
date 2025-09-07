@@ -19,6 +19,12 @@ class WhatsappVerificationsController < ApplicationController
   end
 
   def resend
+    if current_user.phone_number.blank?
+      flash[:alert] = "Número de telefone não encontrado. Entre em contato com o suporte."
+      redirect_to whatsapp_verification_path
+      return
+    end
+
     if current_user.generate_verification_code!
       flash[:notice] = "Novo código enviado para seu WhatsApp!"
     else
